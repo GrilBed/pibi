@@ -128,9 +128,96 @@
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
     }
+
+    /* Schermata introduttiva Pi & Bi */
+    .welcome {
+      position: fixed; inset: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(ellipse at 50% 38%, rgba(233,199,123,.16), transparent 48%),
+        linear-gradient(160deg, rgba(10,35,29,.97), rgba(23,59,50,.98) 52%, rgba(8,29,25,.99));
+      text-align: center;
+      opacity: 1; visibility: visible;
+      transition: opacity .9s ease, visibility .9s ease;
+      overflow: hidden;
+    }
+    .welcome::before, .welcome::after {
+      content: "✦"; position: absolute; color: var(--gold);
+      text-shadow: 0 0 14px rgba(233,199,123,.9);
+      animation: welcomeSparkle 3s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .welcome::before { top: 18%; left: 17%; font-size: 18px; }
+    .welcome::after { right: 16%; bottom: 20%; font-size: 25px; animation-delay: -1.4s; }
+    .welcome-card {
+      width: min(560px, 100%); position: relative; z-index: 1;
+      padding: clamp(28px, 6vw, 52px) clamp(22px, 6vw, 48px);
+      border: 1px solid rgba(233,199,123,.48);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255,250,240,.09), rgba(255,250,240,.025));
+      box-shadow: 0 24px 80px rgba(0,0,0,.28), inset 0 0 35px rgba(233,199,123,.045);
+      backdrop-filter: blur(7px);
+      animation: welcomeAppear 1.2s cubic-bezier(.2,.75,.25,1) both;
+    }
+    .welcome-ornament {
+      color: var(--gold); font-size: 25px; letter-spacing: .35em;
+      margin-bottom: 22px; text-shadow: 0 0 18px rgba(233,199,123,.45);
+    }
+    .welcome-kicker {
+      color: var(--gold); text-transform: uppercase; letter-spacing: .25em;
+      font: 15px/1.5 Arial, sans-serif; margin-bottom: 15px;
+    }
+    .welcome h2 {
+      color: #f5d99e; font-size: clamp(2.2rem, 8vw, 3.5rem);
+      font-weight: 500; line-height: 1.1; margin: 0 0 23px;
+      text-shadow: 0 4px 25px rgba(0,0,0,.28);
+    }
+    .welcome-message {
+      color: #f2eee2; font-size: clamp(1rem, 3vw, 1.16rem);
+      line-height: 1.9; white-space: pre-line; margin: 0 auto 29px;
+    }
+    .welcome-signature { color: #f1cf8c; font-style: italic; }
+    .welcome-button {
+      border: 1px solid rgba(255,239,203,.8); border-radius: 999px;
+      padding: 13px 27px; color: #243b30; cursor: pointer;
+      background: linear-gradient(135deg, #f5dda6, #d8b66d);
+      box-shadow: 0 8px 26px rgba(0,0,0,.24), 0 0 22px rgba(233,199,123,.18);
+      font: 600 12px Arial, sans-serif; letter-spacing: .12em;
+      text-transform: uppercase; transition: transform .2s, box-shadow .2s;
+    }
+    .welcome-button:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,.3), 0 0 28px rgba(233,199,123,.32); }
+    .welcome-button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+    .welcome.closing { opacity: 0; visibility: hidden; pointer-events: none; }
+    @keyframes welcomeAppear {
+      from { opacity: 0; transform: translateY(18px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes welcomeSparkle {
+      0%, 100% { opacity: .35; transform: scale(.8) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1.25) rotate(35deg); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .welcome-card, .welcome::before, .welcome::after { animation: none !important; }
+      .welcome, .welcome-button { transition: none !important; }
+    }
+
   </style>
 </head>
 <body>
+
+  <section class="welcome" id="welcome" aria-label="Benvenuta">
+    <div class="welcome-card">
+      <div class="welcome-ornament" aria-hidden="true">✧ ❄ ✧</div>
+      <div class="welcome-kicker">Un piccolo pensiero per te</div>
+      <h2>Ciao Pì ❤️</h2>
+      <p class="welcome-message">Quest'anno ho deciso di regalarti qualcosa di diverso.
+24 piccoli momenti, che rappresentano quello che sei per me e come mi fai sentire.
+<span class="welcome-signature">Con amore, Bi ❤️</span></p>
+      <button class="welcome-button" id="welcomeButton" type="button">Apri il tuo regalo ✨</button>
+    </div>
+  </section>
+
   <canvas id="snow" aria-hidden="true"></canvas>
   <div class="glow one"></div><div class="glow two"></div>
   <div class="lights" aria-hidden="true">
@@ -252,6 +339,17 @@
     } else {
       counter.textContent = "🎄 Ci vediamo il 1° dicembre 2026";
     }
+
+    // La schermata di benvenuto viene mostrata a ogni apertura del sito.
+    const welcome = document.getElementById("welcome");
+    document.getElementById("welcomeButton").addEventListener("click", () => {
+      welcome.classList.add("closing");
+      window.setTimeout(() => {
+        welcome.style.display = "none";
+        document.getElementById("calendar").scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 900);
+    });
+
     renderCalendar();
 
     // Neve leggera, senza librerie esterne.
