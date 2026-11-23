@@ -87,10 +87,43 @@
     .door:nth-child(4n) { background: linear-gradient(145deg, #456b60, #25483d); }
     .door::before { content: ""; position: absolute; inset: 7px; border: 1px solid rgba(255,239,203,.32); border-radius: 8px; pointer-events: none; }
     .door:not(.locked):hover { transform: translateY(-5px) scale(1.025); box-shadow: 0 15px 28px rgba(0,0,0,.3), 0 0 18px rgba(233,199,123,.18); }
-    .door.locked { cursor: not-allowed; filter: saturate(.55) brightness(.75); }
+    .door.locked {
+      cursor: not-allowed;
+      border-color: rgba(245,218,159,.78);
+      box-shadow: 0 9px 22px rgba(0,0,0,.22), inset 0 0 0 4px rgba(255,255,255,.045), inset 0 0 28px rgba(255,232,180,.08);
+      background-image: radial-gradient(circle at 50% 12%, rgba(255,239,198,.18), transparent 43%), linear-gradient(145deg, rgba(255,255,255,.1), transparent 55%);
+    }
+    .door.locked::after {
+      content: "✦     ·     ✧";
+      position: absolute; top: 15px; left: 0; right: 0;
+      color: rgba(255,235,185,.62); font-size: 11px; letter-spacing: .55em;
+      pointer-events: none;
+    }
+    .door.locked .number {
+      color: #fff2d3;
+      font-size: clamp(2.45rem, 7vw, 3.7rem);
+      line-height: 1; font-weight: 500;
+      text-shadow: 0 2px 0 rgba(74,42,23,.25), 0 0 18px rgba(255,225,164,.28);
+    }
     .door .number { font-size: clamp(2rem, 6vw, 3.25rem); line-height: 1; }
     .door .door-icon { font-size: 1.15rem; }
+    .door.locked .door-icon {
+      display: grid; place-items: center; width: 30px; height: 30px;
+      border: 1px solid rgba(255,235,190,.45); border-radius: 50%;
+      background: rgba(20,44,35,.22); font-size: 15px;
+      box-shadow: 0 0 13px rgba(255,224,158,.12);
+    }
     .door .state { font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .13em; opacity: .9; }
+    .door.locked .state {
+      max-width: 90%; font-size: 9px; line-height: 1.35; letter-spacing: .045em;
+      color: #ffedc7; opacity: .98; padding: 5px 8px; border-radius: 10px;
+      border: 1px solid rgba(255,235,190,.28); background: rgba(12,35,28,.22);
+      text-transform: none;
+    }
+    .door.locked:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(0,0,0,.28), 0 0 22px rgba(233,199,123,.16), inset 0 0 28px rgba(255,232,180,.1); }
+    .door.locked:nth-child(3n) { background-color: #7c303b; }
+    .door.locked:nth-child(3n + 1) { background-color: #1b5141; }
+    .door.locked:nth-child(3n + 2) { background-color: #80602f; }
     .door.opened { background: linear-gradient(145deg, #d4b879, #9b7840); color: #25392f; }
     .hint { text-align: center; color: #d7dfd4; font: 12px/1.6 Arial, sans-serif; margin: 0 auto 30px; }
     footer { text-align: center; color: #c9d2c8; font-size: 1rem; padding: 0 15px 35px; position: relative; z-index: 1; }
@@ -166,7 +199,7 @@
     }
     .welcome-kicker {
       color: var(--gold); text-transform: uppercase; letter-spacing: .25em;
-      font: 15px/1.5 Arial, sans-serif; margin-bottom: 15px;
+      font: 10px/1.5 Arial, sans-serif; margin-bottom: 15px;
     }
     .welcome h2 {
       color: #f5d99e; font-size: clamp(2.2rem, 8vw, 3.5rem);
@@ -201,6 +234,61 @@
       .welcome-card, .welcome::before, .welcome::after { animation: none !important; }
       .welcome, .welcome-button { transition: none !important; }
     }
+    /* Countdown al 1 dicembre */
+.countdown {
+  max-width: 430px;
+  margin: 22px auto 5px;
+  text-align: center;
+  padding: 18px 14px;
+  border: 1px solid rgba(233,199,123,.45);
+  border-radius: 16px;
+  background: rgba(255,255,255,.045);
+  box-shadow: 0 8px 25px rgba(0,0,0,.15);
+}
+
+.countdown-title {
+  color: #f0cf8d;
+  font-size: 13px;
+  letter-spacing: .12em;
+  margin-bottom: 14px;
+}
+
+.countdown-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+
+.countdown-unit {
+  padding: 10px 3px;
+  border-radius: 10px;
+  background: rgba(233,199,123,.10);
+  border: 1px solid rgba(233,199,123,.22);
+}
+
+.countdown-number {
+  display: block;
+  color: #f5d99e;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  line-height: 1.2;
+  font-weight: bold;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  display: block;
+  color: #e7e6d8;
+  font: 9px Arial, sans-serif;
+  letter-spacing: .1em;
+  margin-top: 5px;
+}
+
+.countdown-date {
+  color: #e9c77b;
+  font: 10px Arial, sans-serif;
+  letter-spacing: .2em;
+  margin-top: 13px;
+}
 
   </style>
 </head>
@@ -210,9 +298,11 @@
     <div class="welcome-card">
       <div class="welcome-ornament" aria-hidden="true">✧ ❄ ✧</div>
       <div class="welcome-kicker">Un piccolo pensiero per te</div>
-      <h2>Ciao Pì ❤️</h2>
+      <h2>Ciao Pi... ❤️</h2>
       <p class="welcome-message">Quest'anno ho deciso di regalarti qualcosa di diverso.
-24 piccoli momenti, che rappresentano quello che sei per me e come mi fai sentire.
+24 piccoli momenti, che rappresentano quello che sei per me.
+Perché il regalo più bello, per me, sei sempre tu.
+
 <span class="welcome-signature">Con amore, Bi ❤️</span></p>
       <button class="welcome-button" id="welcomeButton" type="button">Apri il tuo regalo ✨</button>
     </div>
@@ -228,6 +318,35 @@
     <div class="eyebrow">Un piccolo pensiero al giorno</div>
     <h1>Pi &amp; Bi <span>Avvento 2026</span> ❤️</h1>
     <p class="intro">Ventiquattro giorni, ventiquattro sorprese.<br>Un piccolo conto alla rovescia affinché tu possa amarmi di più ✨</p>
+    <div class="countdown">
+  <div class="countdown-title">
+    ✨ Manca pochissimo al nostro dicembre ✨
+  </div>
+
+  <div class="countdown-grid">
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-days">00</span>
+      <span class="countdown-label">GIORNI</span>
+    </div>
+
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-hours">00</span>
+      <span class="countdown-label">ORE</span>
+    </div>
+
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-minutes">00</span>
+      <span class="countdown-label">MINUTI</span>
+    </div>
+
+    <div class="countdown-unit">
+      <span class="countdown-number" id="cd-seconds">00</span>
+      <span class="countdown-label">SECONDI</span>
+    </div>
+  </div>
+
+  <div class="countdown-date">✧ 1 DICEMBRE 2026 ✧</div>
+</div>
     <div class="counter" id="counter">🎄 Il nostro dicembre comincia presto</div>
   </header>
 
@@ -305,7 +424,35 @@
         button.type = "button";
         button.disabled = !unlocked;
         button.setAttribute("aria-label", unlocked ? `Apri la sorpresa del ${day} dicembre` : `Giorno ${day}, ancora bloccato`);
-        button.innerHTML = `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon">${unlocked ? "✦" : "🔒"}</span><span class="state">${unlocked ? "Apri la sorpresa" : "In arrivo"}</span>`;
+        const lockedPhrases = [
+          "C'è un pensiero che profuma di te",
+          "Un piccolo segreto tutto nostro",
+          "Oggi brilla una stella in più",
+          "Le cose belle arrivano piano",
+          "Un sorriso ha già il tuo nome",
+          "La magia è nei dettagli",
+          "Un abbraccio è nascosto qui",
+          "Ci sono cose che parlano di noi",
+          "Un altro motivo per sceglierti",
+          "Lascia spazio alla meraviglia",
+          "Il bello deve ancora arrivare",
+          "Un pensiero, solo per te",
+          "Anche oggi sei il mio posto felice",
+          "Un pizzico della nostra magia",
+          "Le sorprese più belle hanno i tuoi occhi",
+          "Un ricordo aspetta di rivivere",
+          "Sei la mia parte preferita",
+          "Qualcosa di speciale si avvicina",
+          "Un giorno più vicino al nostro Natale",
+          "C'è una canzone che ci somiglia",
+          "Un desiderio da tenere stretto",
+          "La felicità ha il tuo sorriso",
+          "Quasi Natale, sempre noi",
+          "Il pensiero più bello sei tu"
+        ];
+        button.innerHTML = unlocked
+          ? `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon">✦</span><span class="state">Apri la sorpresa</span>`
+          : `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon" aria-hidden="true">✧</span><span class="state">${lockedPhrases[index]}</span>`;
         if (unlocked) button.addEventListener("click", () => openSurprise(day));
         calendar.appendChild(button);
       });
@@ -340,15 +487,53 @@
       counter.textContent = "🎄 Ci vediamo il 1° dicembre 2026";
     }
 
+        // Countdown al 1 dicembre 2026
+    function updateCountdown() {
+      const target = new Date(2026, 11, 1, 0, 0, 0);
+      const now = new Date();
+      const difference = target - now;
+
+      if (difference <= 0) {
+        document.querySelector(".countdown-title").textContent =
+          "❤️ È arrivato il nostro dicembre!";
+
+        document.querySelector(".countdown-grid").style.display = "none";
+        document.querySelector(".countdown-date").textContent =
+          "BUON 1 DICEMBRE PI ❤️";
+
+        return;
+      }
+
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((difference / (1000 * 60)) % 60);
+      const seconds = Math.floor((difference / 1000) % 60);
+
+      document.getElementById("cd-days").textContent =
+        String(days).padStart(2, "0");
+
+      document.getElementById("cd-hours").textContent =
+        String(hours).padStart(2, "0");
+
+      document.getElementById("cd-minutes").textContent =
+        String(minutes).padStart(2, "0");
+
+      document.getElementById("cd-seconds").textContent =
+        String(seconds).padStart(2, "0");
+    }
+
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
     // La schermata di benvenuto viene mostrata a ogni apertura del sito.
     const welcome = document.getElementById("welcome");
     document.getElementById("welcomeButton").addEventListener("click", () => {
-      welcome.classList.add("closing");
-      window.setTimeout(() => {
-        welcome.style.display = "none";
-        document.getElementById("calendar").scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 900);
-    });
+  welcome.classList.add("closing");
+  window.setTimeout(() => {
+    welcome.style.display = "none";
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, 900);
+});
 
     renderCalendar();
 
