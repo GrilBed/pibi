@@ -199,7 +199,7 @@
     }
     .welcome-kicker {
       color: var(--gold); text-transform: uppercase; letter-spacing: .25em;
-      font: 10px/1.5 Arial, sans-serif; margin-bottom: 15px;
+      font: 15px/1.5 Arial, sans-serif; margin-bottom: 15px;
     }
     .welcome h2 {
       color: #f5d99e; font-size: clamp(2.2rem, 8vw, 3.5rem);
@@ -290,20 +290,121 @@
   margin-top: 13px;
 }
 
+
+/* ===== MINIGIOCO BANANA ===== */
+.banana-launcher {
+  display: block;
+  margin: 12px auto 25px;
+  padding: 13px 22px;
+  border: 1px solid #e9c77b;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #e9c77b, #b18a48);
+  color: #173b32;
+  font: bold 14px Arial, sans-serif;
+  cursor: pointer;
+  box-shadow: 0 5px 18px rgba(0,0,0,.2);
+  transition: transform .2s;
+}
+.banana-launcher:hover { transform: scale(1.05); }
+
+.banana-game {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(5,18,15,.88);
+  backdrop-filter: blur(8px);
+}
+.banana-game.show { display: flex; }
+
+.banana-card {
+  width: min(460px, 100%);
+  padding: 23px;
+  border-radius: 20px;
+  background: #fff8ec;
+  color: #26352e;
+  text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,.4);
+}
+.banana-card h2 {
+  color: #245345;
+  margin: 5px 0 10px;
+  font-size: 25px;
+}
+.banana-stats {
+  display: flex;
+  justify-content: space-around;
+  margin: 16px 0;
+  color: #81602d;
+  font: bold 14px Arial, sans-serif;
+}
+.banana-field {
+  height: 260px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 2px dashed #d5b56d;
+  background: linear-gradient(145deg,#eaf0df,#fff3d9);
+}
+.banana-target {
+  display: none;
+  position: absolute;
+  font-size: 47px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  transform: translate(-50%,-50%);
+  animation: bananaPop .22s ease-out;
+  touch-action: manipulation;
+}
+@keyframes bananaPop {
+  from { transform: translate(-50%,-50%) scale(.2); }
+  to { transform: translate(-50%,-50%) scale(1); }
+}
+.banana-action {
+  margin-top: 16px;
+  padding: 11px 23px;
+  border: 0;
+  border-radius: 25px;
+  background: #245345;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+.banana-close {
+  float: right;
+  border: 0;
+  background: transparent;
+  color: #59645c;
+  font-size: 25px;
+  cursor: pointer;
+}
+.banana-result {
+  display: none;
+  margin-top: 15px;
+  padding: 14px;
+  border-radius: 12px;
+  background: #f5e9c9;
+  color: #654d26;
+  line-height: 1.6;
+}
+
+
   </style>
 </head>
 <body>
 
   <section class="welcome" id="welcome" aria-label="Benvenuta">
     <div class="welcome-card">
-      <div class="welcome-ornament" aria-hidden="true">✧ ❄ ✧</div>
+      <div class="welcome-ornament" aria-hidden="true">♥ ✧ ❄ ✧ ♥</div>
       <div class="welcome-kicker">Un piccolo pensiero per te</div>
-      <h2>Ciao Pi... ❤️</h2>
+      <h2>Ciao Pì ❤️</h2>
       <p class="welcome-message">Quest'anno ho deciso di regalarti qualcosa di diverso.
-24 piccoli momenti, che rappresentano quello che sei per me.
-Perché il regalo più bello, per me, sei sempre tu.
-
-<span class="welcome-signature">Con amore, Bi ❤️</span></p>
+24 piccoli "momenti" di FELICITÀ, che rappresentano quello che sei per me e ciò che mi fai provare.
+<span class="welcome-signature">Con amore, Bì ❤️</span></p>
       <button class="welcome-button" id="welcomeButton" type="button">Apri il tuo regalo ✨</button>
     </div>
   </section>
@@ -350,12 +451,42 @@ Perché il regalo più bello, per me, sei sempre tu.
     <div class="counter" id="counter">🎄 Il nostro dicembre comincia presto</div>
   </header>
 
+  <button class="banana-launcher" id="bananaLauncher">
+  🍌 Una sorpresa un po'... particolare!
+</button>
+
   <main>
     <section class="calendar" id="calendar" aria-label="Calendario dell'Avvento"></section>
+
+<div class="banana-game" id="bananaGame">
+  <div class="banana-card">
+    <button class="banana-close" id="bananaClose">×</button>
+
+    <h2>🍌 La caccia alla banana!</h2>
+    <p>Riesci a catturarne 5 in soli 20 secondi?</p>
+
+    <div class="banana-stats">
+      <span>🍌 Prese: <b id="bananaScore">0</b>/5</span>
+      <span>⏱ Tempo: <b id="bananaTime">20</b>s</span>
+    </div>
+
+    <div class="banana-field" id="bananaField">
+      <button class="banana-target" id="bananaTarget"
+        aria-label="Cattura la banana">🍌</button>
+    </div>
+
+    <button class="banana-action" id="bananaStart">
+      Inizia la caccia!
+    </button>
+
+    <div class="banana-result" id="bananaResult"></div>
+  </div>
+</div>
+
     <p class="hint">Ogni finestrella custodisce una sorpresa. Torna ogni giorno per scoprirne una nuova. ❤️</p>
   </main>
 
-  <footer>Fatto con amore, da <strong>Bi</strong> per <strong>Pi</strong> <span class="heart">♥</span></footer>
+  <footer>Fatto con amore, da <strong>Bì</strong> per <strong>Pì</strong> <span class="heart">♥</span></footer>
 
   <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-card">
@@ -364,7 +495,7 @@ Perché il regalo più bello, per me, sei sempre tu.
       <h2 id="modalTitle">Una sorpresa per te ❤️</h2>
       <p class="message" id="modalMessage"></p>
       <div class="video-wrap" id="videoWrap"></div>
-      <div class="small-note">Un altro piccolo ricordo da custodire. ✨</div>
+      <div class="small-note">Un altro piccolo ricordo da custodire e da non far vedere a nessuno 🤣. ✨</div>
     </div>
   </div>
 
@@ -377,30 +508,30 @@ Perché il regalo più bello, per me, sei sempre tu.
       Lascia youtube vuoto finché non hai scelto il video.
     */
     const surprises = [
-      { title: "Si comincia ❤️", message: "Il primo video; Io ci sarò!", youtube: "v2AC41dglnM" },
-      { title: "Un pensiero per te", message: "Qui arriverà la tua seconda dedica. ✨", youtube: "7cjVj1ZyzyE" },
-      { title: "Un nostro ricordo", message: "Qui ci sarà un video tutto nostro. ❤️", youtube: "" },
-      { title: "Piccole cose", message: "Le cose più belle, a volte, sono proprio quelle più semplici.", youtube: "" },
-      { title: "Il tuo sorriso", message: "Una piccola sorpresa pensata per te.", youtube: "" },
-      { title: "Noi due", message: "Un altro pezzetto della nostra storia.", youtube: "" },
-      { title: "Una coccola", message: "Oggi ti mando un abbraccio, anche da lontano. 🤍", youtube: "" },
-      { title: "Momenti belli", message: "Un ricordo che voglio rivivere insieme a te.", youtube: "" },
-      { title: "La tua magia", message: "Hai un modo tutto tuo di rendere speciali le giornate.", youtube: "" },
-      { title: "Una sorpresa", message: "La sorpresa di oggi è tutta da scoprire.", youtube: "" },
-      { title: "Sempre insieme", message: "Un altro giorno, un altro motivo per sceglierti.", youtube: "" },
-      { title: "Metà percorso", message: "Siamo già a metà del nostro piccolo viaggio natalizio!", youtube: "" },
-      { title: "Un momento nostro", message: "Questo spazio aspetta un video speciale.", youtube: "" },
-      { title: "Ti penso", message: "Anche nelle giornate normali, sei il mio pensiero bello.", youtube: "" },
-      { title: "Una risata", message: "Che non ci manchino mai le risate insieme.", youtube: "" },
-      { title: "Il bello di noi", message: "Le nostre piccole abitudini sono tra le cose che preferisco.", youtube: "" },
-      { title: "Un regalo in parole", message: "Oggi la sorpresa è una dedica tutta per te.", youtube: "" },
-      { title: "Un ricordo speciale", message: "Qui aggiungeremo un altro video da riguardare insieme.", youtube: "" },
-      { title: "Quasi Natale", message: "Manca sempre meno al Natale… e a una sorpresa speciale.", youtube: "" },
-      { title: "La nostra playlist", message: "Una canzone, un video, un momento che parla di noi.", youtube: "" },
-      { title: "Un desiderio", message: "Che ci aspettino ancora tantissimi momenti belli da vivere insieme.", youtube: "" },
-      { title: "Manca pochissimo", message: "Il conto alla rovescia continua, amore. ❤️", youtube: "" },
-      { title: "La vigilia della vigilia", message: "Domani ci aspetta l'ultima finestrella…", youtube: "" },
-      { title: "Buon Natale, Pi ❤️", message: "Questa è la sorpresa finale. Grazie per essere la mia persona speciale. Ti voglio bene, oggi e in tutti i giorni che verranno. ❤️", youtube: "" }
+      { title: "Io ci sarò ❤️", message: "Qualunque cosa accada, in qualsiasi momento della vita, voglio che tu sappia che potrai sempre contare su di me.", youtube: "v2AC41dglnM" },
+      { title: "Bubbly", message: "Ci sono persone capaci di rendere tutto più bello, semplicemente con un sorriso. ✨", youtube: "" },
+      { title: "1 su un milione", message: "Tra milioni di persone, strade e possibilità, la fortuna più grande è stata trovare proprio te ❤️", youtube: "" },
+      { title: "Wherever You Will Go", message: "Non importa dove ti porterà la vita: il mio desiderio sarà sempre quello di raggiungerti e starti accanto.", youtube: "" },
+      { title: "Always ❤️", message: "Ci sono amori che non conoscono il tempo, che resistono alle difficoltà e che continuano a vivere per sempre.", youtube: "" },
+      { title: "Il giorno di dolore che uno ha", message: "Non posso prometterti di cancellare ogni dolore, ma posso prometterti che non dovrai affrontarlo da sola.", youtube: "" },
+      { title: "The One", message: "Quando tutto sembra confuso, ci sono persone che riescono a farti capire che hai finalmente trovato quella giusta. 🤍", youtube: "" },
+      { title: "Il regalo più grande", message: "Se potessi scegliere un regalo da farti, sarebbe quello di riuscire a farti vedere attraverso i miei occhi, per capire quanto sei speciale.", youtube: "" },
+      { title: "Stop Crying Your Heart Out", message: "Anche quando tutto sembra andare storto, non perdere la speranza: dopo ogni tempesta torna sempre il sereno.", youtube: "" },
+      { title: "Vuoi volare con me? ❤️", message: "Vorrei non smettere mai di sognare insieme a te, conservando quella parte bambina che ci permette di volare.", youtube: "" },
+      { title: "She's the One", message: "Tra tutte le persone che avrei potuto incontrare, sei tu quella che il mio cuore avrebbe scelto ancora.", youtube: "" },
+      { title: "Vorrei", message: "Vorrei poterti regalare tutto ciò che desideri, ma soprattutto vorrei essere sempre una delle ragioni dei tuoi sorrisi.", youtube: "" },
+      { title: "How to Save a Life", message: "A volte amare significa anche non sapere cosa dire o cosa fare, ma scegliere comunque di non andare via.", youtube: "" },
+      { title: "Yellow", message: "Sei quella luce speciale che riesce a illuminare anche i miei giorni più bui.", youtube: "" },
+      { title: "Sei parte di ME", message: "Ormai sei intrecciata ai miei pensieri, ai miei giorni e a tutto ciò che sono. Non sei soltanto accanto a me: sei parte di me.", youtube: "" },
+      { title: "Without You Here", message: "Ci sono assenze che fanno rumore più di mille parole, perché alcune persone diventano casa, anche quando sono lontane.", youtube: "" },
+      { title: "I Don't Want to Miss a Thing", message: "Non vorrei perdermi neanche un istante con te, perché anche i momenti più semplici diventano speciali quando ci sei.", youtube: "" },
+      { title: "Eppure sentire", message: "Ci sono emozioni che non hanno bisogno di spiegazioni: basta uno sguardo, una presenza, un battito per sentirle.", youtube: "" },
+      { title: "Chasing Cars", message: "Se potessi fermare il tempo, sceglierei un momento qualsiasi con te, lontano da tutto il resto del mondo.", youtube: "" },
+      { title: "Di Notte", message: "Anche nelle notti più silenziose, quando i pensieri diventano più forti, c'è un posto nel mio cuore in cui ci sei sempre tu.", youtube: "" },
+      { title: "Fix You", message: "Vorrei essere quella persona capace di raccogliere i tuoi pezzi nei giorni difficili e ricordarti quanto vali.", youtube: "" },
+      { title: "Somewhere Only We Know", message: "Vorrei che avessimo sempre un posto tutto nostro, fatto di ricordi, complicità e piccoli momenti che soltanto noi possiamo capire. ❤️", youtube: "" },
+      { title: "Favola ❤️", message: "Mi piace pensare che il nostro incontro sia una di quelle favole che non hanno bisogno di un lieto fine, perché continuano a essere scritte ogni giorno.", youtube: "" },
+      { title: "The Messenger 🪽", message: "Qualunque cosa succeda, non dimenticare mai quanto sei amata. Anche nei momenti più difficili, ci sarà sempre una luce pronta a guidarti.", youtube: "" }
     ];
 
     // Lascia false per il calendario reale. Imposta true solo per provare tutte le caselle prima di pubblicarlo.
@@ -414,6 +545,140 @@ Perché il regalo più bello, per me, sei sempre tu.
     const calendar = document.getElementById("calendar");
     const modal = document.getElementById("modal");
     const monthNames = ["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+
+
+// ===== MINIGIOCO: CACCIA ALLA BANANA =====
+
+const bananaGame = document.getElementById("bananaGame");
+const bananaLauncher = document.getElementById("bananaLauncher");
+const bananaClose = document.getElementById("bananaClose");
+const bananaStart = document.getElementById("bananaStart");
+const bananaTarget = document.getElementById("bananaTarget");
+const bananaField = document.getElementById("bananaField");
+
+let bananaScore = 0;
+let bananaSeconds = 20;
+let bananaClock = null;
+let bananaHide = null;
+let bananaPlaying = false;
+
+function openBananaGame() {
+  stopBananaGame();
+  bananaGame.classList.add("show");
+  document.getElementById("bananaResult").style.display = "none";
+  bananaStart.style.display = "inline-block";
+  bananaStart.textContent = "Inizia la caccia!";
+  document.getElementById("bananaScore").textContent = "0";
+  document.getElementById("bananaTime").textContent = "20";
+  bananaTarget.style.display = "none";
+}
+
+function closeBananaGame() {
+  stopBananaGame();
+  bananaGame.classList.remove("show");
+}
+
+function stopBananaGame() {
+  bananaPlaying = false;
+  clearInterval(bananaClock);
+  clearTimeout(bananaHide);
+  bananaTarget.style.display = "none";
+}
+
+function spawnBanana() {
+  if (!bananaPlaying) return;
+
+  const maxX = bananaField.clientWidth - 35;
+  const maxY = bananaField.clientHeight - 35;
+
+  bananaTarget.style.left =
+    (35 + Math.random() * Math.max(0, maxX - 35)) + "px";
+
+  bananaTarget.style.top =
+    (35 + Math.random() * Math.max(0, maxY - 35)) + "px";
+
+  bananaTarget.style.display = "block";
+
+  // La banana scompare se non viene catturata.
+  bananaHide = setTimeout(() => {
+    bananaTarget.style.display = "none";
+    if (bananaPlaying) {
+      setTimeout(spawnBanana, 250);
+    }
+  }, 1100);
+}
+
+function startBananaGame() {
+  stopBananaGame();
+
+  bananaScore = 0;
+  bananaSeconds = 20;
+  bananaPlaying = true;
+
+  document.getElementById("bananaScore").textContent = "0";
+  document.getElementById("bananaTime").textContent = "20";
+  document.getElementById("bananaResult").style.display = "none";
+  bananaStart.style.display = "none";
+
+  spawnBanana();
+
+  bananaClock = setInterval(() => {
+    bananaSeconds--;
+    document.getElementById("bananaTime").textContent =
+      bananaSeconds;
+
+    if (bananaSeconds <= 0) {
+      finishBananaGame(false);
+    }
+  }, 1000);
+}
+
+function finishBananaGame(won) {
+  stopBananaGame();
+
+  const result = document.getElementById("bananaResult");
+  result.style.display = "block";
+
+  if (won) {
+    result.innerHTML =
+      "🎉 <b>CE L'HAI FATTA, PI!</b><br><br>" +
+      "Sei riuscita a catturare tutte le banane, " +
+      "ma la banana più bella la catturi quando sei con me 🍌 ❤️" +
+      "<br><br><b>Con amore, Bì ❤️</b>";
+  } else {
+    result.innerHTML =
+      "😂 La banana è stata più veloce!<br><br>" +
+      "Ma niente paura, amore... puoi sempre riprovarci! 🍌";
+    bananaStart.style.display = "inline-block";
+    bananaStart.textContent = "Riprova!";
+  }
+}
+
+bananaLauncher.addEventListener("click", openBananaGame);
+bananaClose.addEventListener("click", closeBananaGame);
+bananaStart.addEventListener("click", startBananaGame);
+
+bananaGame.addEventListener("click", event => {
+  if (event.target === bananaGame) closeBananaGame();
+});
+
+bananaTarget.addEventListener("click", () => {
+  if (!bananaPlaying) return;
+
+  clearTimeout(bananaHide);
+  bananaTarget.style.display = "none";
+
+  bananaScore++;
+  document.getElementById("bananaScore").textContent =
+    bananaScore;
+
+  if (bananaScore >= 5) {
+    finishBananaGame(true);
+  } else {
+    setTimeout(spawnBanana, 250);
+  }
+});
+
 
     function renderCalendar() {
       surprises.forEach((item, index) => {
