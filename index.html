@@ -392,6 +392,18 @@
   line-height: 1.6;
 }
 
+.video-wrap.vertical {
+  width: min(100%, 340px);
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  background: #142c25;
+}
+
+.video-wrap.horizontal {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
 
   </style>
 </head>
@@ -508,32 +520,31 @@
       Lascia youtube vuoto finché non hai scelto il video.
     */
     const surprises = [
-      { title: "Io ci sarò ❤️", message: "Qualunque cosa accada, in qualsiasi momento della vita, voglio che tu sappia che potrai sempre contare su di me.", youtube: "ocYxJOckjj8" },
-      { title: "Bubbly", message: "Ci sono persone capaci di rendere tutto più bello, semplicemente con un sorriso. ✨", youtube: "8XennwGmILc" },
-      { title: "1 su un milione", message: "Tra milioni di persone, strade e possibilità, la fortuna più grande è stata trovare proprio te ❤️", youtube: "" },
-      { title: "Wherever You Will Go", message: "Non importa dove ti porterà la vita: il mio desiderio sarà sempre quello di raggiungerti e starti accanto.", youtube: "BrT7DQbZONU" },
-      { title: "Always ❤️", message: "Ci sono amori che non conoscono il tempo, che resistono alle difficoltà e che continuano a vivere per sempre.", youtube: "" },
-      { title: "Il giorno di dolore che uno ha", message: "Non posso prometterti di cancellare ogni dolore, ma posso prometterti che non dovrai affrontarlo da sola.", youtube: "4dyjhx3Ix3s" },
-      { title: "The One", message: "Quando tutto sembra confuso, ci sono persone che riescono a farti capire che hai finalmente trovato quella giusta. 🤍", youtube: "wDa9SsNhyGc" },
-      { title: "Il regalo più grande", message: "Se potessi scegliere un regalo da farti, sarebbe quello di riuscire a farti vedere attraverso i miei occhi, per capire quanto sei speciale.", youtube: "" },
-      { title: "Stop Crying Your Heart Out", message: "Anche quando tutto sembra andare storto, non perdere la speranza: dopo ogni tempesta torna sempre il sereno.", youtube: "" },
-      { title: "Vuoi volare con me? ❤️", message: "Vorrei non smettere mai di sognare insieme a te, conservando quella parte bambina che ci permette di volare.", youtube: "" },
-      { title: "She's the One", message: "Tra tutte le persone che avrei potuto incontrare, sei tu quella che il mio cuore avrebbe scelto ancora.", youtube: "" },
-      { title: "Vorrei", message: "Vorrei poterti regalare tutto ciò che desideri, ma soprattutto vorrei essere sempre una delle ragioni dei tuoi sorrisi.", youtube: "" },
-      { title: "How to Save a Life", message: "A volte amare significa anche non sapere cosa dire o cosa fare, ma scegliere comunque di non andare via.", youtube: "" },
-      { title: "Yellow", message: "Sei quella luce speciale che riesce a illuminare anche i miei giorni più bui.", youtube: "" },
-      { title: "Sei parte di ME", message: "Ormai sei intrecciata ai miei pensieri, ai miei giorni e a tutto ciò che sono. Non sei soltanto accanto a me: sei parte di me.", youtube: "" },
-      { title: "Without You Here", message: "Ci sono assenze che fanno rumore più di mille parole, perché alcune persone diventano casa, anche quando sono lontane.", youtube: "" },
-      { title: "I Don't Want to Miss a Thing", message: "Non vorrei perdermi neanche un istante con te, perché anche i momenti più semplici diventano speciali quando ci sei.", youtube: "" },
-      { title: "Eppure sentire", message: "Ci sono emozioni che non hanno bisogno di spiegazioni: basta uno sguardo, una presenza, un battito per sentirle.", youtube: "" },
-      { title: "Chasing Cars", message: "Se potessi fermare il tempo, sceglierei un momento qualsiasi con te, lontano da tutto il resto del mondo.", youtube: "" },
-      { title: "Di Notte", message: "Anche nelle notti più silenziose, quando i pensieri diventano più forti, c'è un posto nel mio cuore in cui ci sei sempre tu.", youtube: "" },
-      { title: "Fix You", message: "Vorrei essere quella persona capace di raccogliere i tuoi pezzi nei giorni difficili e ricordarti quanto vali.", youtube: "" },
-      { title: "Somewhere Only We Know", message: "Vorrei che avessimo sempre un posto tutto nostro, fatto di ricordi, complicità e piccoli momenti che soltanto noi possiamo capire. ❤️", youtube: "" },
-      { title: "Favola ❤️", message: "Mi piace pensare che il nostro incontro sia una di quelle favole che non hanno bisogno di un lieto fine, perché continuano a essere scritte ogni giorno.", youtube: "" },
-      { title: "The Messenger 🪽", message: "Qualunque cosa succeda, non dimenticare mai quanto sei amata. Anche nei momenti più difficili, ci sarà sempre una luce pronta a guidarti.", youtube: "" }
-    ];
-
+  { title: "Io ci sarò ❤️", message: "Qualunque cosa accada, in qualsiasi momento della vita, voglio che tu sappia che potrai sempre contare su di me.", streamable: "y8k6an", vertical: true },
+  { title: "Bubbly", message: "Ci sono persone capaci di rendere tutto più bello, semplicemente con un sorriso. ✨", streamable: "d0726o", vertical: true },
+  { title: "1 su un milione", message: "Tra milioni di persone, strade e possibilità, la fortuna più grande è stata trovare proprio te ❤️", streamable: "lmbjps", vertical: true },
+  { title: "Wherever You Will Go", message: "Non importa dove ti porterà la vita: il mio desiderio sarà sempre quello di raggiungerti e starti accanto.", streamable: "2t6cvi", vertical: true },
+  { title: "Always ❤️", message: "Ci sono amori che non conoscono il tempo, che resistono alle difficoltà e che continuano a vivere per sempre.", streamable: "", vertical: true },
+  { title: "Il giorno di dolore che uno ha", message: "Non posso prometterti di cancellare ogni dolore, ma posso prometterti che non dovrai affrontarlo da sola.", streamable: "fk2ryr", vertical: false },
+  { title: "The One", message: "Quando tutto sembra confuso, ci sono persone che riescono a farti capire che hai finalmente trovato quella giusta. 🤍", streamable: "gv8rx0", vertical: true },
+  { title: "Il regalo più grande", message: "Se potessi scegliere un regalo da farti, sarebbe quello di riuscire a farti vedere attraverso i miei occhi, per capire quanto sei speciale.", streamable: "", vertical: true },
+  { title: "Stop Crying Your Heart Out", message: "Anche quando tutto sembra andare storto, non perdere la speranza: dopo ogni tempesta torna sempre il sereno.", streamable: "", vertical: true },
+  { title: "Vuoi volare con me? ❤️", message: "Vorrei non smettere mai di sognare insieme a te, conservando quella parte bambina che ci permette di volare.", streamable: "", vertical: true },
+  { title: "She's the One", message: "Tra tutte le persone che avrei potuto incontrare, sei tu quella che il mio cuore avrebbe scelto ancora.", streamable: "", vertical: true },
+  { title: "Vorrei", message: "Vorrei poterti regalare tutto ciò che desideri, ma soprattutto vorrei essere sempre una delle ragioni dei tuoi sorrisi.", streamable: "", vertical: true },
+  { title: "How to Save a Life", message: "A volte amare significa anche non sapere cosa dire o cosa fare, ma scegliere comunque di non andare via.", streamable: "", vertical: true },
+  { title: "Yellow", message: "Sei quella luce speciale che riesce a illuminare anche i miei giorni più bui.", streamable: "", vertical: true },
+  { title: "Sei parte di ME", message: "Ormai sei intrecciata ai miei pensieri, ai miei giorni e a tutto ciò che sono. Non sei soltanto accanto a me: sei parte di me.", streamable: "vja0c2", vertical: true },
+  { title: "Without You Here", message: "Ci sono assenze che fanno rumore più di mille parole, perché alcune persone diventano casa, anche quando sono lontane.", streamable: "", vertical: true },
+  { title: "I Don't Want to Miss a Thing", message: "Non vorrei perdermi neanche un istante con te, perché anche i momenti più semplici diventano speciali quando ci sei.", streamable: "", vertical: true },
+  { title: "Eppure sentire", message: "Ci sono emozioni che non hanno bisogno di spiegazioni: basta uno sguardo, una presenza, un battito per sentirle.", streamable: "", vertical: true },
+  { title: "Chasing Cars", message: "Se potessi fermare il tempo, sceglierei un momento qualsiasi con te, lontano da tutto il resto del mondo.", streamable: "", vertical: true },
+  { title: "Di Notte", message: "Anche nelle notti più silenziose, quando i pensieri diventano più forti, c'è un posto nel mio cuore in cui ci sei sempre tu.", streamable: "", vertical: true },
+  { title: "Fix You", message: "Vorrei essere quella persona capace di raccogliere i tuoi pezzi nei giorni difficili e ricordarti quanto vali.", streamable: "", vertical: true },
+  { title: "Somewhere Only We Know", message: "Vorrei che avessimo sempre un posto tutto nostro, fatto di ricordi, complicità e piccoli momenti che soltanto noi possiamo capire. ❤️", streamable: "", vertical: true },
+  { title: "Favola ❤️", message: "Mi piace pensare che il nostro incontro sia una di quelle favole che non hanno bisogno di un lieto fine, perché continuano a essere scritte ogni giorno.", streamable: "", vertical: true },
+  { title: "The Messenger 🪽", message: "Qualunque cosa succeda, non dimenticare mai quanto sei amata. Anche nei momenti più difficili, ci sarà sempre una luce pronta a guidarti.", streamable: "", vertical: true }
+];
     // Lascia false per il calendario reale. Imposta true solo per provare tutte le caselle prima di pubblicarlo.
     const PREVIEW_MODE = false;
     const today = new Date();
@@ -724,19 +735,48 @@ bananaTarget.addEventListener("click", () => {
     }
 
     function openSurprise(day) {
-      const item = surprises[day - 1];
-      document.getElementById("modalDate").textContent = `${day} dicembre 2026`;
-      document.getElementById("modalTitle").textContent = item.title;
-      document.getElementById("modalMessage").textContent = item.message;
-      const wrap = document.getElementById("videoWrap");
-      if (item.youtube && /^[a-zA-Z0-9_-]{11}$/.test(item.youtube)) {
-        wrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${item.youtube}?rel=0" title="Video della sorpresa" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
-      } else {
-        wrap.innerHTML = `<div class="video-placeholder">🎁<br>Il video di oggi sarà aggiunto qui.<br><small>Per ora goditi la dedica ❤️</small></div>`;
-      }
-      modal.classList.add("show");
-      document.getElementById("closeModal").focus();
-    }
+  const item = surprises[day - 1];
+
+  document.getElementById("modalDate").textContent =
+    `${day} dicembre 2026`;
+
+  document.getElementById("modalTitle").textContent =
+    item.title;
+
+  document.getElementById("modalMessage").textContent =
+    item.message;
+
+  const wrap = document.getElementById("videoWrap");
+
+  if (item.streamable && /^[a-zA-Z0-9]+$/.test(item.streamable)) {
+
+    wrap.className = "video-wrap " +
+    (item.vertical ? "vertical" : "horizontal")
+
+  wrap.innerHTML = `
+    <iframe
+      src="https://streamable.com/e/${item.streamable}"
+      title="Video della sorpresa"
+      allow="fullscreen; picture-in-picture"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen>
+    </iframe>`;
+
+} else {
+
+  wrap.className = "video-wrap horizontal";
+
+  wrap.innerHTML = `
+    <div class="video-placeholder">
+      🎁<br>
+      Il video di oggi sarà aggiunto qui.<br>
+      <small>Per ora goditi la dedica ❤️</small>
+    </div>`;
+}
+
+  modal.classList.add("show");
+  document.getElementById("closeModal").focus();
+}
     function closeModal() {
       modal.classList.remove("show");
       document.getElementById("videoWrap").innerHTML = "";
