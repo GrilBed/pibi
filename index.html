@@ -4,6 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#173b32">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Un calendario dell'Avvento fatto con amore.">
+  <meta property="og:title" content="Pi &amp; Bi · Avvento 2026 ❤️">
+  <meta property="og:description" content="Ventiquattro giorni, ventiquattro sorprese.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
   <title>Pi &amp; Bi Avvento 2026 ❤️</title>
   <style>
     :root {
@@ -19,7 +25,7 @@
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
-      margin: 0; min-height: 100vh; color: var(--cream);
+      margin: 0; min-height: 100vh; min-height: 100dvh; color: var(--cream);
       font-family: Georgia, "Times New Roman", serif;
       background:
         radial-gradient(ellipse at 50% -15%, rgba(235,198,119,.22), transparent 45%),
@@ -54,6 +60,13 @@
     .bulb:nth-child(3n) { background: #d96c72; box-shadow: 0 0 10px 3px rgba(217,108,114,.55); animation-delay: .7s; }
     .bulb:nth-child(3n + 1) { background: #9fc9a2; box-shadow: 0 0 10px 3px rgba(159,201,162,.55); animation-delay: 1.2s; }
     @keyframes twinkle { from { opacity: .55; } to { opacity: 1; filter: brightness(1.35); } }
+    /* Ghirlanda-calendario: una lucina per giorno, accesa se la casella è disponibile */
+    .lights .bulb.off { box-shadow: none; animation: none; opacity: .28; filter: saturate(.45); }
+    .lights .bulb.new { animation: bulbNew 1.6s ease-in-out infinite alternate; }
+    @keyframes bulbNew {
+      from { transform: scale(1); filter: brightness(1.2); }
+      to { transform: scale(1.35); filter: brightness(1.8); box-shadow: 0 0 16px 6px rgba(255,236,180,.85); }
+    }
     header { text-align: center; padding: 42px 18px 25px; position: relative; z-index: 1; }
     .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: .24em; font: 11px/1.5 Arial, sans-serif; }
     h1 { font-size: clamp(2.1rem, 7vw, 4.2rem); line-height: 1.08; font-weight: 500; margin: 14px 0 12px; text-shadow: 0 4px 24px rgba(0,0,0,.25); }
@@ -113,9 +126,9 @@
       background: rgba(20,44,35,.22); font-size: 15px;
       box-shadow: 0 0 13px rgba(255,224,158,.12);
     }
-    .door .state { font: 10px Arial, sans-serif; text-transform: uppercase; letter-spacing: .13em; opacity: .9; }
+    .door .state { font: 11px Arial, sans-serif; text-transform: uppercase; letter-spacing: .1em; opacity: .95; }
     .door.locked .state {
-      max-width: 90%; font-size: 9px; line-height: 1.35; letter-spacing: .045em;
+      max-width: 92%; font-size: 11px; line-height: 1.3; letter-spacing: .02em;
       color: #ffedc7; opacity: .98; padding: 5px 8px; border-radius: 10px;
       border: 1px solid rgba(255,235,190,.28); background: rgba(12,35,28,.22);
       text-transform: none;
@@ -125,7 +138,35 @@
     .door.locked:nth-child(3n + 1) { background-color: #1b5141; }
     .door.locked:nth-child(3n + 2) { background-color: #80602f; }
     .door.opened { background: linear-gradient(145deg, #d4b879, #9b7840); color: #25392f; }
-    .hint { text-align: center; color: #d7dfd4; font: 12px/1.6 Arial, sans-serif; margin: 0 auto 30px; }
+    /* Casella di oggi: bagliore dorato che pulsa piano */
+    .door.today {
+      border-color: #fff3cf;
+      box-shadow: 0 0 0 3px rgba(245,217,158,.55), 0 0 28px rgba(245,217,158,.5), 0 9px 22px rgba(0,0,0,.25);
+      animation: todayPulse 2.6s ease-in-out infinite;
+    }
+    @keyframes todayPulse {
+      50% { box-shadow: 0 0 0 6px rgba(245,217,158,.22), 0 0 40px rgba(245,217,158,.7), 0 9px 22px rgba(0,0,0,.25); }
+    }
+    /* Casella già aperta: più tenue, con spunta */
+    .door.viewed { background: linear-gradient(145deg, #6c8a76, #3e6354); color: #fff6e7; }
+    .door.today.viewed { animation: none; box-shadow: 0 9px 22px rgba(0,0,0,.22), inset 0 0 0 4px rgba(255,255,255,.035); }
+    /* Casella bloccata toccata */
+    .door.shake { animation: doorShake .45s; }
+    @keyframes doorShake {
+      20% { transform: translateX(-5px); } 40% { transform: translateX(5px); }
+      60% { transform: translateX(-3px); } 80% { transform: translateX(3px); }
+    }
+    .toast {
+      position: fixed; left: 50%; bottom: 28px; z-index: 25;
+      max-width: min(90%, 360px); padding: 11px 18px; border-radius: 999px;
+      background: rgba(255,248,236,.97); color: #26352e;
+      font: 14px/1.4 Arial, sans-serif; text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      opacity: 0; transform: translate(-50%, 20px); pointer-events: none;
+      transition: opacity .25s, transform .25s;
+    }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .hint { text-align: center; color: #d7dfd4; font: 13px/1.6 Arial, sans-serif; margin: 18px auto 4px; }
     footer { text-align: center; color: #c9d2c8; font-size: 1rem; padding: 0 15px 35px; position: relative; z-index: 1; }
     footer .heart { color: #e99ba0; font-size: 1.3rem; }
     .modal {
@@ -135,14 +176,14 @@
     .modal.show { display: flex; animation: fade .25s ease; }
     @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
     .modal-card {
-      width: min(650px, 100%); max-height: 92vh; overflow: auto;
+      width: min(650px, 100%); max-height: 92vh; max-height: 92dvh; overflow: auto;
       background: var(--cream); color: var(--ink); border-radius: 19px;
       padding: clamp(20px, 5vw, 34px); position: relative;
       box-shadow: 0 24px 70px rgba(0,0,0,.4); text-align: center;
       border: 1px solid #e7d5ad;
     }
     .close {
-      position: absolute; top: 12px; right: 14px; border: 0; background: transparent;
+      position: absolute; top: 6px; right: 8px; width: 44px; height: 44px; border: 0; background: transparent;
       font-size: 27px; color: #58675d; cursor: pointer; line-height: 1;
     }
     .modal-date { color: #9b7133; font: 11px Arial, sans-serif; letter-spacing: .2em; text-transform: uppercase; }
@@ -151,12 +192,22 @@
     .video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #142c25; border-radius: 11px; overflow: hidden; }
     .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .video-placeholder { color: #f8ebd2; height: 100%; display: grid; place-items: center; padding: 20px; font: 14px/1.6 Arial, sans-serif; }
-    .small-note { color: #8a938b; font: 11px Arial, sans-serif; margin-top: 14px; }
+    .small-note { color: #5f6b63; font: 12px/1.5 Arial, sans-serif; margin-top: 14px; }
+    .reply-link {
+      display: inline-block; margin-top: 18px; padding: 12px 22px; border-radius: 999px;
+      background: #245345; color: #fff8ec; text-decoration: none;
+      font: 600 14px Arial, sans-serif;
+      box-shadow: 0 6px 18px rgba(36,83,69,.3); transition: transform .2s;
+    }
+    .reply-link:hover { transform: translateY(-2px); }
+    .reply-link:focus-visible { outline: 3px solid #9b7133; outline-offset: 3px; }
+    .modal-song { color: #9b7133; font: 600 13px Arial, sans-serif; margin: -2px 0 12px; }
     @media (max-width: 540px) {
       header { padding-top: 32px; }
       .calendar { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-      .door { min-height: 112px; }
-      .door .state { font-size: 9px; }
+      .door { min-height: 130px; }
+      .door .state { font-size: 10.5px; }
+      .door.locked .state { font-size: 10.5px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
@@ -173,7 +224,7 @@
       text-align: center;
       opacity: 1; visibility: visible;
       transition: opacity .9s ease, visibility .9s ease;
-      overflow: hidden;
+      overflow-x: hidden; overflow-y: auto;
     }
     .welcome::before, .welcome::after {
       content: "✦"; position: absolute; color: var(--gold);
@@ -184,7 +235,7 @@
     .welcome::before { top: 18%; left: 17%; font-size: 18px; }
     .welcome::after { right: 16%; bottom: 20%; font-size: 25px; animation-delay: -1.4s; }
     .welcome-card {
-      width: min(560px, 100%); position: relative; z-index: 1;
+      width: min(560px, 100%); margin: auto; position: relative; z-index: 1;
       padding: clamp(28px, 6vw, 52px) clamp(22px, 6vw, 48px);
       border: 1px solid rgba(233,199,123,.48);
       border-radius: 24px;
@@ -278,15 +329,15 @@
 .countdown-label {
   display: block;
   color: #e7e6d8;
-  font: 9px Arial, sans-serif;
-  letter-spacing: .1em;
+  font: 11px Arial, sans-serif;
+  letter-spacing: .08em;
   margin-top: 5px;
 }
 
 .countdown-date {
   color: #e9c77b;
-  font: 10px Arial, sans-serif;
-  letter-spacing: .2em;
+  font: 11px Arial, sans-serif;
+  letter-spacing: .18em;
   margin-top: 13px;
 }
 
@@ -294,7 +345,7 @@
 /* ===== MINIGIOCO BANANA ===== */
 .banana-launcher {
   display: block;
-  margin: 12px auto 25px;
+  margin: 8px auto 40px;
   padding: 13px 22px;
   border: 1px solid #e9c77b;
   border-radius: 30px;
@@ -376,6 +427,7 @@
 }
 .banana-close {
   float: right;
+  width: 44px; height: 44px; margin: -12px -12px 0 0;
   border: 0;
   background: transparent;
   color: #59645c;
@@ -393,7 +445,8 @@
 }
 
 .video-wrap.vertical {
-  width: min(100%, 340px);
+  width: min(100%, 340px, calc(58vh * 9 / 16));
+  width: min(100%, 340px, calc(58dvh * 9 / 16));
   aspect-ratio: 9 / 16;
   margin: 0 auto;
   background: #142c25;
@@ -409,7 +462,7 @@
 </head>
 <body>
 
-  <section class="welcome" id="welcome" aria-label="Benvenuta">
+  <section class="welcome" id="welcome" role="dialog" aria-modal="true" aria-label="Benvenuta">
     <div class="welcome-card">
       <div class="welcome-ornament" aria-hidden="true">♥ ✧ ❄ ✧ ♥</div>
       <div class="welcome-kicker">Un piccolo pensiero per te</div>
@@ -420,12 +473,18 @@
       <button class="welcome-button" id="welcomeButton" type="button">Apri il tuo regalo ✨</button>
     </div>
   </section>
+  <script>
+    /* Benvenuto mostrato solo la prima volta (aggiungi ?welcome all'indirizzo per rivederlo) */
+    try {
+      if (localStorage.getItem("piBiWelcomeSeen") === "1" && !location.search.includes("welcome")) {
+        document.getElementById("welcome").style.display = "none";
+      }
+    } catch (e) {}
+  </script>
 
   <canvas id="snow" aria-hidden="true"></canvas>
   <div class="glow one"></div><div class="glow two"></div>
-  <div class="lights" aria-hidden="true">
-    <i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i><i class="bulb"></i>
-  </div>
+  <div class="lights" id="lights" aria-hidden="true"></div>
 
   <header>
     <div class="eyebrow">Un piccolo pensiero al giorno</div>
@@ -463,16 +522,13 @@
     <div class="counter" id="counter">🎄 Il nostro dicembre comincia presto</div>
   </header>
 
-  <button class="banana-launcher" id="bananaLauncher">
-  🍌 Una sorpresa un po'... particolare!
-</button>
-
   <main>
+    <p class="hint">Ogni finestrella custodisce una sorpresa. Torna ogni giorno per scoprirne una nuova. ❤️</p>
     <section class="calendar" id="calendar" aria-label="Calendario dell'Avvento"></section>
 
 <div class="banana-game" id="bananaGame">
-  <div class="banana-card">
-    <button class="banana-close" id="bananaClose">×</button>
+  <div class="banana-card" role="dialog" aria-modal="true" aria-label="Caccia alla banana">
+    <button class="banana-close" id="bananaClose" aria-label="Chiudi">×</button>
 
     <h2>🍌 La caccia alla banana!</h2>
     <p>Riesci a catturarne 5 in soli 20 secondi?</p>
@@ -495,7 +551,9 @@
   </div>
 </div>
 
-    <p class="hint">Ogni finestrella custodisce una sorpresa. Torna ogni giorno per scoprirne una nuova. ❤️</p>
+    <button class="banana-launcher" id="bananaLauncher">
+      🍌 Una sorpresa extra, un po'... particolare!
+    </button>
   </main>
 
   <footer>Fatto con amore, da <strong>Bì</strong> per <strong>Pì</strong> <span class="heart">♥</span></footer>
@@ -505,19 +563,25 @@
       <button class="close" id="closeModal" aria-label="Chiudi">×</button>
       <div class="modal-date" id="modalDate">1 dicembre</div>
       <h2 id="modalTitle">Una sorpresa per te ❤️</h2>
+      <div class="modal-song" id="modalSong" hidden></div>
       <p class="message" id="modalMessage"></p>
       <div class="video-wrap" id="videoWrap"></div>
-      <div class="small-note">Un altro piccolo ricordo da custodire e da non far vedere a nessuno 🤣. ✨</div>
+      <div class="small-note" id="modalNote">Un altro piccolo ricordo da custodire e da non far vedere a nessuno 🤣. ✨</div>
+      <a class="reply-link" id="replyLink" href="#" target="_blank" rel="noopener noreferrer">💬 Rispondi a Bì</a>
     </div>
   </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
     /*
       PERSONALIZZA QUI LE 24 SORPRESE:
       - title: titolo della finestrella
       - message: dedica o messaggio
-      - youtube: ID del video YouTube (la parte dopo v= oppure youtu.be/)
-      Lascia youtube vuoto finché non hai scelto il video.
+      - streamable: ID del video Streamable (la parte finale di streamable.com/XXXXXX).
+        Se è vuoto, la finestrella mostra solo il messaggio, senza riquadro video.
+      - vertical: true per i video verticali, false per quelli orizzontali
+      - artist: (facoltativo) es. artist: "Coldplay" mostra "🎵 Coldplay" sotto il titolo
     */
     const surprises = [
   { title: "Io ci sarò ❤️", message: "Qualunque cosa accada, in qualsiasi momento della vita, voglio che tu sappia che potrai sempre contare su di me.", streamable: "y8k6an", vertical: true },
@@ -547,6 +611,10 @@
 ];
     // Lascia false per il calendario reale. Imposta true solo per provare tutte le caselle prima di pubblicarlo.
     const PREVIEW_MODE = false;
+
+    // Numero WhatsApp di Bì, in formato internazionale senza + né spazi (es. "393331234567").
+    // Se resta vuoto, WhatsApp le farà scegliere la chat a cui mandare il messaggio.
+    const WHATSAPP_NUMBER = "";
     const today = new Date();
     const year = 2026;
     const month = 11; // dicembre: 0 = gennaio
@@ -571,6 +639,7 @@ let bananaScore = 0;
 let bananaSeconds = 20;
 let bananaClock = null;
 let bananaHide = null;
+let bananaNext = null;
 let bananaPlaying = false;
 
 function openBananaGame() {
@@ -593,6 +662,7 @@ function stopBananaGame() {
   bananaPlaying = false;
   clearInterval(bananaClock);
   clearTimeout(bananaHide);
+  clearTimeout(bananaNext);
   bananaTarget.style.display = "none";
 }
 
@@ -614,7 +684,7 @@ function spawnBanana() {
   bananaHide = setTimeout(() => {
     bananaTarget.style.display = "none";
     if (bananaPlaying) {
-      setTimeout(spawnBanana, 250);
+      bananaNext = setTimeout(spawnBanana, 250);
     }
   }, 1100);
 }
@@ -656,6 +726,8 @@ function finishBananaGame(won) {
       "Sei riuscita a catturare tutte le banane, " +
       "brava POPPETTA !! 🍌 ❤️" +
       "<br><br><b>Con amore, Bì ❤️</b>";
+    bananaStart.style.display = "inline-block";
+    bananaStart.textContent = "Rigioca";
   } else {
     result.innerHTML =
       "😂 La banana è stata più veloce!<br><br>" +
@@ -686,10 +758,38 @@ bananaTarget.addEventListener("click", () => {
   if (bananaScore >= 5) {
     finishBananaGame(true);
   } else {
-    setTimeout(spawnBanana, 250);
+    bananaNext = setTimeout(spawnBanana, 250);
   }
 });
 
+
+    // Caselle già aperte, ricordate su questo dispositivo
+    const VIEWED_KEY = "piBiViewedDays";
+    function loadViewed() { try { return JSON.parse(localStorage.getItem(VIEWED_KEY)) || []; } catch (e) { return []; } }
+    function saveViewed(list) { try { localStorage.setItem(VIEWED_KEY, JSON.stringify(list)); } catch (e) {} }
+    let viewedDays = loadViewed();
+
+    let toastTimer = null;
+    function showToast(text) {
+      const toast = document.getElementById("toast");
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+    }
+
+    function refreshDoor(button, day) {
+      const viewed = viewedDays.includes(day);
+      const isToday = day === currentDay;
+      button.classList.toggle("viewed", viewed);
+      button.classList.toggle("today", isToday);
+      button.querySelector(".door-icon").textContent = viewed ? "✓" : "✦";
+      button.querySelector(".state").textContent = viewed ? "Rileggi" : (isToday ? "Oggi tocca a te" : "Apri la sorpresa");
+      button.setAttribute("aria-label",
+        viewed ? `Rileggi la sorpresa del ${day} dicembre`
+        : isToday ? `Apri la sorpresa di oggi, ${day} dicembre`
+        : `Apri la sorpresa del ${day} dicembre`);
+    }
 
     function renderCalendar() {
       surprises.forEach((item, index) => {
@@ -698,8 +798,9 @@ bananaTarget.addEventListener("click", () => {
         const button = document.createElement("button");
         button.className = "door" + (unlocked ? " opened" : " locked");
         button.type = "button";
-        button.disabled = !unlocked;
-        button.setAttribute("aria-label", unlocked ? `Apri la sorpresa del ${day} dicembre` : `Giorno ${day}, ancora bloccato`);
+        button.dataset.day = day;
+        if (!unlocked) button.setAttribute("aria-disabled", "true");
+        button.setAttribute("aria-label", unlocked ? `Apri la sorpresa del ${day} dicembre` : `Giorno ${day}, disponibile dal ${day} dicembre`);
         const lockedPhrases = [
           "C'è un pensiero che profuma di te",
           "Un piccolo segreto tutto nostro",
@@ -727,85 +828,107 @@ bananaTarget.addEventListener("click", () => {
           "Il pensiero più bello sei tu"
         ];
         button.innerHTML = unlocked
-          ? `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon">✦</span><span class="state">Apri la sorpresa</span>`
+          ? `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon" aria-hidden="true">✦</span><span class="state"></span>`
           : `<span class="number">${String(day).padStart(2, "0")}</span><span class="door-icon" aria-hidden="true">✧</span><span class="state">${lockedPhrases[index]}</span>`;
-        if (unlocked) button.addEventListener("click", () => openSurprise(day));
+        if (unlocked) {
+          refreshDoor(button, day);
+          button.addEventListener("click", () => openSurprise(day, button));
+        } else {
+          button.addEventListener("click", () => {
+            button.classList.remove("shake");
+            void button.offsetWidth;
+            button.classList.add("shake");
+            showToast(`Questa sorpresa si apre il ${day} dicembre ✨`);
+          });
+          button.addEventListener("animationend", () => button.classList.remove("shake"));
+        }
         calendar.appendChild(button);
       });
     }
 
-    function openSurprise(day) {
-  const item = surprises[day - 1];
+    let lastDoor = null;
 
-  document.getElementById("modalDate").textContent =
-    `${day} dicembre 2026`;
+    function openSurprise(day, trigger) {
+      const item = surprises[day - 1];
+      lastDoor = trigger || null;
 
-  document.getElementById("modalTitle").textContent =
-    item.title;
+      document.getElementById("modalDate").textContent = `${day} dicembre 2026`;
+      document.getElementById("modalTitle").textContent = item.title;
+      document.getElementById("modalMessage").textContent = item.message;
 
-  document.getElementById("modalMessage").textContent =
-    item.message;
+      const song = document.getElementById("modalSong");
+      if (item.artist) { song.textContent = `🎵 ${item.artist}`; song.hidden = false; }
+      else { song.hidden = true; }
 
-  const wrap = document.getElementById("videoWrap");
+      const wrap = document.getElementById("videoWrap");
+      const note = document.getElementById("modalNote");
 
-  if (item.streamable && /^[a-zA-Z0-9]+$/.test(item.streamable)) {
+      if (item.streamable && /^[a-zA-Z0-9]+$/.test(item.streamable)) {
+        wrap.style.display = "";
+        wrap.className = "video-wrap " + (item.vertical ? "vertical" : "horizontal");
+        wrap.innerHTML = `
+          <iframe
+            src="https://streamable.com/e/${item.streamable}"
+            title="Video della sorpresa"
+            allow="fullscreen; picture-in-picture"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>`;
+        note.hidden = false;
+      } else {
+        // Nessun video: solo la dedica, senza riquadro vuoto né nota sul video
+        wrap.style.display = "none";
+        wrap.innerHTML = "";
+        note.hidden = true;
+      }
 
-    wrap.className = "video-wrap " +
-    (item.vertical ? "vertical" : "horizontal")
+      if (!viewedDays.includes(day)) {
+        viewedDays.push(day);
+        saveViewed(viewedDays);
+      }
+      if (lastDoor) refreshDoor(lastDoor, day);
 
-  wrap.innerHTML = `
-    <iframe
-      src="https://streamable.com/e/${item.streamable}"
-      title="Video della sorpresa"
-      allow="fullscreen; picture-in-picture"
-      referrerpolicy="strict-origin-when-cross-origin"
-      allowfullscreen>
-    </iframe>`;
+      const replyText = `Ho aperto la casella ${day} ❤️ «${item.title}»`;
+      document.getElementById("replyLink").href =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(replyText)}`;
 
-} else {
+      modal.classList.add("show");
+      document.getElementById("closeModal").focus();
+    }
 
-  wrap.className = "video-wrap horizontal";
-
-  wrap.innerHTML = `
-    <div class="video-placeholder">
-      🎁<br>
-      Il video di oggi sarà aggiunto qui.<br>
-      <small>Per ora goditi la dedica ❤️</small>
-    </div>`;
-}
-
-  modal.classList.add("show");
-  document.getElementById("closeModal").focus();
-}
     function closeModal() {
+      if (!modal.classList.contains("show")) return;
       modal.classList.remove("show");
       document.getElementById("videoWrap").innerHTML = "";
+      if (lastDoor) lastDoor.focus();
     }
     document.getElementById("closeModal").addEventListener("click", closeModal);
     modal.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-    document.addEventListener("keydown", e => { if (e.key === "Escape") closeModal(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape") { closeModal(); closeBananaGame(); } });
 
     const counter = document.getElementById("counter");
     if (today.getFullYear() === 2026 && today.getMonth() === 11) {
-      counter.textContent = currentDay <= 24 ? `🎁 ${Math.min(currentDay,24)} casell${currentDay === 1 ? "a aperta" : "e aperte"} su 24` : "❤️ Il nostro Natale continua";
+      if (currentDay <= 24) {
+        counter.textContent = `🎁 ${currentDay} ${currentDay === 1 ? "casella disponibile" : "caselle disponibili"} su 24`;
+      } else {
+        counter.textContent = "❤️ Il nostro Natale continua";
+      }
     } else {
-      counter.textContent = "🎄 Ci vediamo il 1° dicembre 2026";
+      // Prima di dicembre il countdown dice già tutto: niente doppioni
+      counter.style.display = "none";
     }
 
         // Countdown al 1 dicembre 2026
+    let countdownTimer = null;
     function updateCountdown() {
       const target = new Date(2026, 11, 1, 0, 0, 0);
       const now = new Date();
       const difference = target - now;
 
       if (difference <= 0) {
-        document.querySelector(".countdown-title").textContent =
-          "❤️ È arrivato il nostro dicembre!";
-
-        document.querySelector(".countdown-grid").style.display = "none";
-        document.querySelector(".countdown-date").textContent =
-          "BUON 1 DICEMBRE PI ❤️";
-
+        // Da dicembre il riquadro sparisce: resta solo il calendario
+        document.querySelector(".countdown").style.display = "none";
+        clearInterval(countdownTimer);
         return;
       }
 
@@ -828,11 +951,13 @@ bananaTarget.addEventListener("click", () => {
     }
 
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+    countdownTimer = setInterval(updateCountdown, 1000);
 
     // La schermata di benvenuto viene mostrata a ogni apertura del sito.
     const welcome = document.getElementById("welcome");
+    if (welcome.style.display !== "none") document.getElementById("welcomeButton").focus();
     document.getElementById("welcomeButton").addEventListener("click", () => {
+  try { localStorage.setItem("piBiWelcomeSeen", "1"); } catch (e) {}
   welcome.classList.add("closing");
   window.setTimeout(() => {
     welcome.style.display = "none";
@@ -840,7 +965,19 @@ bananaTarget.addEventListener("click", () => {
   }, 900);
 });
 
+    // Ghirlanda: 24 lucine, una per giorno. Si accendono man mano che le caselle si sbloccano.
+    function renderLights() {
+      const lights = document.getElementById("lights");
+      for (let i = 0; i < 24; i++) {
+        const bulb = document.createElement("i");
+        const lit = i < maxUnlocked;
+        bulb.className = "bulb" + (lit ? "" : " off") + (lit && i === maxUnlocked - 1 ? " new" : "");
+        lights.appendChild(bulb);
+      }
+    }
+
     renderCalendar();
+    renderLights();
 
     // Neve leggera, senza librerie esterne.
     const canvas = document.getElementById("snow");
@@ -871,7 +1008,9 @@ bananaTarget.addEventListener("click", () => {
       });
       requestAnimationFrame(snowFrame);
     }
-    resizeSnow(); window.addEventListener("resize", resizeSnow); snowFrame();
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    resizeSnow(); window.addEventListener("resize", resizeSnow);
+    if (reduceMotion) { canvas.style.display = "none"; } else { snowFrame(); }
   </script>
 </body>
 </html>
